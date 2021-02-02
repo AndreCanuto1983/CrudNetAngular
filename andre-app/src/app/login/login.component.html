@@ -1,0 +1,34 @@
+<div class="container">
+    <ngx-loading [show]="loading">
+    </ngx-loading>
+
+    <form (ngSubmit)="onSubmit()">
+        <mat-card class="login-card">
+            <mat-card-header>
+                <mat-card-title>Login</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-form-field class="login-full-width">
+                    <mat-label>Nome</mat-label>
+                    <input type="text" matInput [formControl]="nameFormControl" placeholder="Nome" value=""
+                        [(ngModel)]="userData.nome">
+                    <mat-icon matSuffix>email</mat-icon>
+                    <mat-error *ngIf="nameFormControl.hasError('required')">
+                        Nome é <strong>obrigatório</strong>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="login-full-width">
+                    <mat-label>Senha</mat-label>
+                    <input type="password" matInput [formControl]="passwordFormControl" placeholder="Senha"
+                        [(ngModel)]="userData.senha">
+                    <mat-icon matSuffix>vpn_key</mat-icon>
+                    <mat-error *ngIf="passwordFormControl.hasError('required')">
+                        Senha é <strong>obrigatório</strong>
+                    </mat-error>
+                </mat-form-field>
+                <button mat-button type="submit" color="primary">Login</button>
+            </mat-card-content>
+        </mat-card>
+    </form>
+</div>

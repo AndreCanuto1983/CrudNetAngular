@@ -1,0 +1,79 @@
+<div>
+    <ngx-loading [show]="loading">
+    </ngx-loading>
+
+    <mat-toolbar color="primary">
+        <span class="example-spacer"></span>
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span>Produtos</span>
+        <div class="div-content">
+            <button class="align-right" (click)="logout()" mat-button>Sair</button>
+        </div>
+    </mat-toolbar>
+
+    <mat-card class="card-product content-component">
+        <form #form (ngSubmit)="onSubmit()" class="size-form">
+            <div class="row align-items-center">
+                <mat-form-field class="col-lg-4 col-md-4">
+                    <mat-label>Produto</mat-label>
+                    <input type="text" placeholder="Produto" matInput [formControl]="productFormControl"
+                        [(ngModel)]="product.name">
+                </mat-form-field>
+
+                <mat-form-field class="col-lg-3 col-md-3">
+                    <mat-label>Preço</mat-label>
+                    <input type="number" matInput [formControl]="priceFormControl" [(ngModel)]="product.price">
+                </mat-form-field>
+
+                <input #inputFile class="col-lg-4 col-md-4 input-file" type='file' accept="image/*"
+                    (change)="onSelectFile($event)">
+            </div><br>
+
+            <div class="div-content">
+                <button class="align-right btn-save" type="submit" mat-raised-button color="primary"
+                    (click)="inputFile.value = ''">Salvar</button>
+                <button class="align-right btn-cancel" type="button" mat-raised-button color="warn"
+                    (click)="[cancel(),inputFile.value = '']">Cancelar</button>
+            </div>
+        </form>
+    </mat-card>
+
+    <div class="list">
+        <mat-card class="content-component">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Preço</th>
+                        <th scope="col" *ngIf="!mobile">Imagem</th>
+                        <th scope="col">Editar/Excluir</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of data; index as i">
+                        <th scope="row">{{item.id}}</th>
+                        <td>{{item.name}}</td>
+                        <td>{{item.price}}</td>
+                        <td *ngIf="!mobile">
+                            {{item.image ? "" : "Sem imagem"}}
+                            <img *ngIf="item.image" class="img-list" src="{{item.image}}" />
+                        </td>
+                        <td>
+                            <button class="btn-grid btn-save" mat-mini-fab color="primary" aria-label="Editar"
+                                (click)="edit(item)">
+                                <mat-icon class="icon-grid">edit</mat-icon>
+                            </button>
+                            <button class="btn-grid btn-delete-list" mat-mini-fab color="warn" aria-label="Excluir"
+                                (click)="delete(item)">
+                                <mat-icon class="icon-grid">delete</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </mat-card>
+    </div>
+</div>
