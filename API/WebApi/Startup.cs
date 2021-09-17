@@ -27,14 +27,12 @@ namespace WebAPI
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            //cria e utiliza o context na memória, qdo a requisição terminar ele limpa o context da memória.
             services.AddScoped<ApplicationDbContext, ApplicationDbContext>();
 
-            //para que ao tentar injetar a interface ele saiba qual repositório implementar
-            services.AddTransient<IRepository<ProductModel>, ProductsRepository>();
-            services.AddTransient<IResponse<string>, Response>();
-            services.AddTransient<IResponse<ProductModel>, ResponseObj>();
-            services.AddTransient<IResponseList<ProductModel>, ResponseList >();
+            services.AddScoped<IRepository<ProductModel>, ProductsRepository>();
+            services.AddScoped<IResponse<string>, Response>();
+            services.AddScoped<IResponse<ProductModel>, ResponseObj>();
+            services.AddScoped<IResponseList<ProductModel>, ResponseList >();
 
 
             services.AddMvc(options => options.EnableEndpointRouting = false);
