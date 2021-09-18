@@ -6,9 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebAPI.Config;
 using WebAPI.Context;
-using WebAPI.Interfaces;
-using WebAPI.Models;
-using WebAPI.Repository;
 
 namespace WebAPI
 {
@@ -29,11 +26,7 @@ namespace WebAPI
 
             services.AddScoped<ApplicationDbContext, ApplicationDbContext>();
 
-            services.AddScoped<IRepository<ProductModel>, ProductsRepository>();
-            services.AddScoped<IResponse<string>, Response>();
-            services.AddScoped<IResponse<ProductModel>, ResponseObj>();
-            services.AddScoped<IResponseList<ProductModel>, ResponseList >();
-
+            services.InterfaceConfiguration();
 
             services.AddMvc(options => options.EnableEndpointRouting = false);
             //services.AddCors();
