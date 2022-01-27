@@ -45,7 +45,7 @@ namespace WebAPI.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            if (model.Id != 0) return BadRequest("Não é permitido informar um id diferente de 0 para salvar");
+            if (model.Id != 0) return BadRequest();
 
             try
             {
@@ -57,7 +57,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
@@ -74,7 +74,7 @@ namespace WebAPI.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            if (model.Id <= 0) return BadRequest("Por favor informe um id maior que 0");
+            if (model.Id <= 0) return BadRequest();
 
             try
             {
@@ -86,7 +86,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
@@ -102,7 +102,7 @@ namespace WebAPI.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            if (id <= 0) return BadRequest("Por favor informe um id maior que 0");
+            if (id <= 0) return BadRequest();
 
             try
             {
@@ -118,7 +118,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
@@ -147,7 +147,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
@@ -172,7 +172,7 @@ namespace WebAPI.Controllers
                 var result = await _productsRepository.Delete(id);
 
                 if (result.success == false)
-                    return NotFound(result);
+                    return NotFound();
                 else
                     return Ok(result);                
             }
@@ -182,7 +182,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
