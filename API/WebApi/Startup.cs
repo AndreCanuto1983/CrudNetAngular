@@ -1,11 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebAPI.Config;
-using WebAPI.Context;
 
 namespace WebAPI
 {
@@ -19,18 +17,15 @@ namespace WebAPI
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
-        {
-            // Configurando o acesso ao bd
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddScoped<ApplicationDbContext, ApplicationDbContext>();
+        {            
+            services.BDConfiguration(Configuration);
 
             services.InterfaceConfiguration();
 
             services.AddMvc(options => options.EnableEndpointRouting = false);
-            //services.AddCors();
+            
             services.AddControllers();
+
             services.AddSwaggerConfiguration();
         }
 
@@ -52,8 +47,7 @@ namespace WebAPI
             .AllowAnyMethod()
             .AllowAnyHeader()
             );
-
-            //app.UseAuthentication();            
+         
             app.UseMvc();
 
             //usar swagger
