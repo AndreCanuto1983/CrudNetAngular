@@ -17,7 +17,9 @@ namespace WebAPI
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
-        {            
+        {
+            services.AddHealthChecks();
+
             services.BDConfiguration(Configuration);
 
             services.InterfaceConfiguration();
@@ -39,6 +41,8 @@ namespace WebAPI
             {
                 app.UseHsts();
             }
+
+            app.UseHealthChecks("/health");
 
             app.UseHttpsRedirection();
 
