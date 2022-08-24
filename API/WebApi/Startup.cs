@@ -9,41 +9,31 @@ namespace WebAPI
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHealthChecks();
-
             services.BDConfiguration(Configuration);
-
             services.InterfaceConfiguration();
-
-            services.AddMvc(options => options.EnableEndpointRouting = false);
-            
+            services.AddMvc(options => options.EnableEndpointRouting = false);            
             services.AddControllers();
-
             services.AddSwaggerConfiguration();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
             else
-            {
                 app.UseHsts();
-            }
 
             app.UseHealthChecks("/health");
-
             app.UseHttpsRedirection();
 
             app.UseCors(x => x
